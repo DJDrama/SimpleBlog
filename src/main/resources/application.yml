@@ -1,0 +1,37 @@
+#server:
+#  port: 9000
+#  servlet:
+#    context-path: /
+#    encoding:
+#      charset: utf-8
+#      enabled: true
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+#  datasource:
+#    url: jdbc:mariadb://localhost:3306/kotlinblog?serverTimezone=Asia/Seoul*useSSL=false*allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8
+#    username: test
+#    password: Test@12345678
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#
+#    open-in-view: false
+#    properties:
+#      hibernate:
+#        default_batch_fetch_size: 1000
+#        globally_quoted_identifiers: true
+#    show-sql: true
