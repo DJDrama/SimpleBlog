@@ -39,6 +39,11 @@ dependencies {
    // testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     //testImplementation("org.springframework.security:spring-security-test")
     implementation("io.github.serpro69:kotlin-faker:2.0.0-rc.1")
+
+    // https://mvnrepository.com/artifact/com.github.gavlyukovskiy/p6spy-spring-boot-starter
+    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
+    implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
+
 }
 
 tasks.withType<KotlinCompile> {
