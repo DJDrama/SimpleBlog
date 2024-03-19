@@ -18,6 +18,7 @@ java {
 
 repositories {
     mavenCentral()
+
 }
 
 extra["snippetsDir"] = file("build/generated-snippets")
@@ -43,7 +44,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.gavlyukovskiy/p6spy-spring-boot-starter
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
     implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
-
 }
 
 tasks.withType<KotlinCompile> {

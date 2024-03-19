@@ -16,6 +16,8 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     generate-ddl: true
     show-sql: true
+    hibernate:
+      ddl-auto: update
 
   h2:
     console:

@@ -18,3 +18,18 @@ data class Member(
 enum class Role {
     USER, ADMIN
 }
+
+fun createFakeMember(memberId: Long): Member {
+    val member = Member("", "", Role.USER)
+    member.id = memberId
+    return member
+}
+
+fun Member.asDtoModel(): MemberRes {
+    return MemberRes(
+        id = this.id ?: 0L,
+        email = this.email,
+        password = this.password,
+        role = this.role
+    )
+}

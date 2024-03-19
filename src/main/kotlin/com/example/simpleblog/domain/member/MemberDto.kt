@@ -11,3 +11,10 @@ fun MemberSaveReq.asEntityModel() = Member(
     password = this.password,
     role = this.role
 )
+
+data class MemberRes(
+    val id: Long,
+    val email: String,
+    val password: String,
+    val role: Role
+)

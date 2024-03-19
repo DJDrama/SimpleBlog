@@ -2,6 +2,7 @@ package com.example.simpleblog.domain.post
 
 import com.example.simpleblog.domain.AuditingEntity
 import com.example.simpleblog.domain.member.Member
+import com.example.simpleblog.domain.member.asDtoModel
 import jakarta.persistence.*
 
 @Entity
@@ -16,3 +17,10 @@ data class Post(
     val member: Member
 
 ) : AuditingEntity()
+
+
+fun Post.asDtoModel() = PostRes(
+    title = this.title,
+    content = this.content,
+    member = this.member.asDtoModel()
+)
