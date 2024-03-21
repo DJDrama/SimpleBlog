@@ -6,13 +6,14 @@ import com.example.simpleblog.domain.post.Post
 import jakarta.persistence.*
 
 @Entity
-@Table(name="Comment")
+@Table(name = "Comment")
 data class Comment(
-    @Column(name="title", nullable = false)
-    val title: String,
-    @Column(name="content", nullable = false)
+    @Column(name = "content", nullable = false)
     val content: String,
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Post::class)
-    val post: Post
-): AuditingEntity()
+    val post: Post,
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Member::class)
+    val member: Member
+) : AuditingEntity()
