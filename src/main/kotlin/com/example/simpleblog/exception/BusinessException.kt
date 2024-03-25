@@ -8,9 +8,7 @@ sealed class BusinessException : RuntimeException {
         this.errorCode = errorCode
     }
 
-    constructor(message: String?, errorCode: ErrorCode) : super(errorCode.message) {
+    constructor(message: String?, errorCode: ErrorCode) : super(message) {
         this.errorCode = errorCode
     }
-
-
 }
