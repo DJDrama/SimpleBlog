@@ -4,6 +4,7 @@ import com.example.simpleblog.domain.post.PostRes
 import com.example.simpleblog.domain.post.PostSaveReq
 import com.example.simpleblog.service.PostService
 import com.example.simpleblog.util.value.CommonResultDto
+import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -41,7 +42,7 @@ class PostController(
     }
 
     @PostMapping("/post")
-    fun savePost(@RequestBody postSaveReq: PostSaveReq): CommonResultDto<PostRes> {
+    fun savePost(@Valid @RequestBody postSaveReq: PostSaveReq): CommonResultDto<PostRes> {
         return CommonResultDto(
             resultCode = HttpStatus.CREATED,
             resultMsg = "save Post",
