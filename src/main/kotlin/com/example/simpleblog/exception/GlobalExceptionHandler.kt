@@ -36,6 +36,14 @@ class GlobalExceptionHandler {
         return ResponseEntity(of, HttpStatus.BAD_REQUEST)
     }
 
+    /**
+     * @sample
+     * {
+     *   "errors": [],
+     *   "code": "C002",
+     *   "message": "Entity not found."
+     * }
+     */
     @ExceptionHandler(EntityNotFoundException::class)
     fun handleEntityNotFoundException(e: EntityNotFoundException): ResponseEntity<ErrorResponse> {
         log.error {
