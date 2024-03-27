@@ -24,20 +24,24 @@ repositories {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
+    // https://mvnrepository.com/artifact/com.auth0/java-jwt
+    implementation("com.auth0:java-jwt:4.4.0")
+
+
     //implementation("org.springframework.boot:spring-boot-starter-actuator")
     //implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     //implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    //implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     //implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     runtimeOnly("com.h2database:h2")
-   // runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+    // runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-   // testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    // testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     //testImplementation("org.springframework.security:spring-security-test")
     implementation("io.github.serpro69:kotlin-faker:2.0.0-rc.1")
 
