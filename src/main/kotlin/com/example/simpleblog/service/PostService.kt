@@ -1,9 +1,5 @@
 package com.example.simpleblog.service
 
-import com.example.simpleblog.domain.member.MemberRes
-import com.example.simpleblog.domain.member.MemberSaveReq
-import com.example.simpleblog.domain.member.asDtoModel
-import com.example.simpleblog.domain.member.asEntityModel
 import com.example.simpleblog.domain.post.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

@@ -5,6 +5,7 @@ import com.example.simpleblog.config.security.PrincipalDetails
 import com.example.simpleblog.domain.member.createFakeMember
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.junit.jupiter.api.Test
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 class UtilTest {
     private val log = KotlinLogging.logger {  }
@@ -22,5 +23,11 @@ class UtilTest {
         log.info {
             "email $email"
         }
+    }
+
+    @Test
+    fun bcryptEncodeTest(){
+        println(BCryptPasswordEncoder().encode("0c1df2157f07d9f85fff25f6cb120ad6"))
+
     }
 }

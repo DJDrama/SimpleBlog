@@ -1,7 +1,7 @@
 package com.example.simpleblog.api
 
 import com.example.simpleblog.domain.member.MemberRes
-import com.example.simpleblog.domain.member.MemberSaveReq
+import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.service.MemberService
 import com.example.simpleblog.util.value.CommonResultDto
 import jakarta.servlet.http.HttpSession
@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.lang.IllegalStateException
 
 @RestController
 @RequestMapping("/api")
@@ -48,7 +47,7 @@ class MemberController(
     }
 
     @PostMapping("/member")
-    fun saveMember(@Valid @RequestBody memberSaveReq: MemberSaveReq): CommonResultDto<MemberRes> {
+    fun saveMember(@Valid @RequestBody memberSaveReq: LoginDto): CommonResultDto<MemberRes> {
         return CommonResultDto(
             resultCode = HttpStatus.CREATED,
             resultMsg = "save member",

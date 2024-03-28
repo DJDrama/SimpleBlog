@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface MemberRepository : JpaRepository<Member, Long>{
     override fun findAll(pageable: Pageable): Page<Member>
+    fun findByEmail(email: String): Member?
 }

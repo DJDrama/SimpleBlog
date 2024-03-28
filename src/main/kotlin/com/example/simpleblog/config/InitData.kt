@@ -45,7 +45,7 @@ class InitData(
         return posts
     }
 
-    private fun generateMember(): Member = MemberSaveReq(
+    private fun generateMember(): Member = LoginDto(
         email = faker.internet.safeEmail(),
         password = faker.crypto.md5(),
         role = Role.USER

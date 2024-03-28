@@ -2,14 +2,14 @@ package com.example.simpleblog.domain.member
 
 import jakarta.validation.constraints.NotNull
 
-data class MemberSaveReq(
+data class LoginDto(
     @field:NotNull(message = "require email")
     val email: String?,
     val password: String?,
     val role: Role?
 )
 
-fun MemberSaveReq.asEntityModel() = Member(
+fun LoginDto.asEntityModel() = Member(
     email = this.email ?: "",
     password = this.password ?: "",
     role = this.role ?: Role.USER
