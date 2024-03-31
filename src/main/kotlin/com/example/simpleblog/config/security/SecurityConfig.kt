@@ -1,7 +1,9 @@
 package com.example.simpleblog.config.security
 
+import com.example.simpleblog.domain.member.MemberRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -27,7 +29,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 class SecurityConfig(
     private val authenticationConfiguration: AuthenticationConfiguration,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val memberRepository: MemberRepository
 ) {
 
     private val log = KotlinLogging.logger { }
@@ -63,8 +66,17 @@ class SecurityConfig(
                 it.configurationSource(corsConfig())
             }
             .addFilter(loginFilter())
+            .addFilter(authenticationFilter())
 
         return http.build()
+    }
+
+    @Bean
+    fun authenticationFilter(): CustomBasicAuthenticationFilter {
+        return CustomBasicAuthenticationFilter(
+            authenticationManager = authenticationManager(),
+            memberRepository = memberRepository
+        )
     }
 
     @Bean
