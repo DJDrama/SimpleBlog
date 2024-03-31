@@ -22,16 +22,11 @@ class CustomBasicAuthenticationFilter(
     private val jwtManager = JwtManager()
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         log.info { "Requests that need authorization come here!" }
-        val authorizationHeader = request.getHeader("Authorization")
-        if (authorizationHeader.isNullOrBlank()) {
-            log.info { "Header is null or blank ${request.requestURL}" }
-            throw NullPointerException("Header is null")
-        }
-
-        val token = authorizationHeader.substringAfter("Bearer ")
-
-        if (token.isNotBlank()) {
+        val token = request.getHeader("Authorization")?.substringAfter("Bearer ")
+        if (token == null) {
+            log.info { "No token!" }
             chain.doFilter(request, response)
+            return
         }
 
         log.info { "token $token" }
@@ -45,7 +40,8 @@ class CustomBasicAuthenticationFilter(
         val principalDetails = PrincipalDetails(member ?: throw NullPointerException("Cannot find member"))
         val authentication: Authentication = UsernamePasswordAuthenticationToken(
             principalDetails,
-            principalDetails.password
+            principalDetails.password,
+            principalDetails.authorities
         )
 
         SecurityContextHolder.getContext().authentication = authentication
