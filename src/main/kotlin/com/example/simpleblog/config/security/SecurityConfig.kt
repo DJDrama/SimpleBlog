@@ -15,6 +15,7 @@ import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -37,7 +38,8 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = false)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 class SecurityConfig(
     private val authenticationConfiguration: AuthenticationConfiguration,
     private val objectMapper: ObjectMapper,
@@ -85,11 +87,12 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it.requestMatchers(toH2Console()).permitAll()
                     // 모든 요청에 인증이 필요
-                    .requestMatchers("/**").authenticated()
+                    .requestMatchers("/v1/posts").hasAnyRole("USER", "ADMIN")
             }
 
         return http.build()
     }
+
 
     class CustomAuthenticationSuccessHandler: AuthenticationSuccessHandler {
         private val log = KotlinLogging.logger { }
@@ -148,6 +151,7 @@ class SecurityConfig(
             accessDeniedException: AccessDeniedException?
         ) {
             log.info { "CustomAccessDeniedHandler: Access Denied!" }
+            //accessDeniedException?.printStackTrace()
             response?.sendError(HttpServletResponse.SC_FORBIDDEN)
         }
 
@@ -157,7 +161,8 @@ class SecurityConfig(
     fun authenticationFilter(): CustomBasicAuthenticationFilter {
         return CustomBasicAuthenticationFilter(
             authenticationManager = authenticationManager(),
-            memberRepository = memberRepository
+            memberRepository = memberRepository,
+            objectMapper = objectMapper
         )
     }
 

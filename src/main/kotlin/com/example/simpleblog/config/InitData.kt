@@ -48,7 +48,7 @@ class InitData(
     private fun generateMember(): Member = LoginDto(
         email = faker.internet.safeEmail(),
         password = "\$2a\$12\$kmsv.hg9WPAPmgVCp69uEusBYWLp02lmeXhE5W0us1MW5goy0n6I.",
-        role = Role.USER
+        role = arrayOf(Role.USER, Role.ADMIN).random()
     ).asEntityModel()
 
     private fun generatePosts() = PostSaveReq(

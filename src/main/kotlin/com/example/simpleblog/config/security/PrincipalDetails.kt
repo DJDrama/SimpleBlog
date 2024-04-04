@@ -1,20 +1,28 @@
 package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.Member
+import com.fasterxml.jackson.annotation.JsonIgnore
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class PrincipalDetails(
-    private val member: Member
+    val member: Member
 ) : UserDetails {
     private val log = KotlinLogging.logger { }
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+
+    @JsonIgnore
+    private val collection: List<GrantedAuthority> = listOf(
+        GrantedAuthority { "ROLE_" + member.role }
+    )
+
+    @JsonIgnore
+    override fun getAuthorities(): List<GrantedAuthority> {
         log.info { "Validate Role" }
-        val collection = mutableListOf<GrantedAuthority>()
+       /* val collection = mutableListOf<GrantedAuthority>()
         collection.add(GrantedAuthority {
             "ROLE_" + member.role
-        })
+        })*/
         return collection
     }
 

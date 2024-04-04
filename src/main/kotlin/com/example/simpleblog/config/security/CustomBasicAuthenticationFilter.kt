@@ -2,6 +2,7 @@ package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.Member
 import com.example.simpleblog.domain.member.MemberRepository
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -15,6 +16,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 class CustomBasicAuthenticationFilter(
     private val memberRepository: MemberRepository,
+    private val objectMapper: ObjectMapper,
     authenticationManager: AuthenticationManager
 ) : BasicAuthenticationFilter(authenticationManager) {
 
@@ -22,7 +24,7 @@ class CustomBasicAuthenticationFilter(
     private val jwtManager = JwtManager()
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         log.info { "Requests that need authorization come here!" }
-        val token = request.getHeader("Authorization")?.substringAfter("Bearer ")
+        val token = request.getHeader(AUTHORIZATION_HEADER)?.substringAfter(JWT_HEADER)
         if (token == null) {
             log.info { "No token!" }
             chain.doFilter(request, response)
@@ -31,13 +33,12 @@ class CustomBasicAuthenticationFilter(
 
         log.info { "token $token" }
 
-        val email = jwtManager.getMemberEmail(token)
-        val member: Member?
-        if (email != null)
-            member = memberRepository.findByEmail(email)
-        else throw NullPointerException("Can't find member email")
+        val principalJsonData = jwtManager.getPrincipalDetailsByAccessToken(accessToken = token)
+        val principalDetails = objectMapper.readValue(principalJsonData, PrincipalDetails::class.java)
 
-        val principalDetails = PrincipalDetails(member ?: throw NullPointerException("Cannot find member"))
+        // DB로 호출
+        //val member = memberRepository.findByEmail(details.member.email)
+        //val principalDetails = PrincipalDetails(member ?: throw NullPointerException("Cannot find member"))
         val authentication: Authentication = UsernamePasswordAuthenticationToken(
             principalDetails,
             principalDetails.password,
